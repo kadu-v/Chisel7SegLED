@@ -4,3 +4,10 @@
 # When configure fails, SCons outputs these
 config.log
 .sconf_temp
+.metals/
+.bloop/
+.vscode/
+project/
+target/
+test_run_dir/
+.DS_Store
