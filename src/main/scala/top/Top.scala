@@ -7,8 +7,11 @@ import genrst._
 
 class Top() extends Module {
   val io = IO(new Bundle {
-    val rx = Input(Bool())
-    // val rts = Input(Bool()) // active: L, inactive : H
+    // BLE interfeace
+    val pmod2 = Output(Bool()) // RX data to RN4871
+    val pmod3 = Input(Bool()) // TX data from RN4871
+    val pmod4 = Output(Bool()) // clear to send
+    val pmod8 = Output(Bool()) // reset of BLE
 
     val PIO0 = Output(UInt(8.W))
   })
@@ -16,7 +19,10 @@ class Top() extends Module {
   val genrst = Module(new GenRst())
   val urx = withReset(genrst.io.rst) { Module(new Rx(12, 115200)) }
   val dec = withReset(genrst.io.rst) { Module(new Decoder()) }
-  urx.io.rx := io.rx
+  io.pmod2 := true.B
+  urx.io.rx := io.pmod3
+  io.pmod4 := urx.io.rts
+  io.pmod8 := true.B
   dec.io.din := urx.io.dout
   io.PIO0 := dec.io.dout
 }

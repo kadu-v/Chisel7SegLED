@@ -11,29 +11,44 @@ class TopSpec extends FlatSpec with ChiselScalatestTester with Matchers {
       c.clock.step(0x0f) // xrst : L
       c.clock.step(0xf0) // xrst : H
       // 104 clock
-      c.io.rx.poke(true.B)
+      c.io.pmod3.poke(true.B)
+      c.io.pmod4.expect(false.B)
+
       c.clock.step(100)
-      c.io.rx.poke(false.B) // start bit
+      c.io.pmod3.poke(false.B) // start bit
+
       c.clock.step(104)
-      c.io.rx.poke(1.B) // 1 bit 1
+      c.io.pmod3.poke(1.B) // 1 bit 1
+      c.io.pmod4.expect(true.B)
+
       c.clock.step(104)
-      c.io.rx.poke(0.B) // 2 bit 0
+      c.io.pmod3.poke(0.B) // 2 bit 0
+
       c.clock.step(104)
-      c.io.rx.poke(1.B) // 3 bit 1
+      c.io.pmod3.poke(1.B) // 3 bit 1
+
       c.clock.step(104)
-      c.io.rx.poke(0.B) // 4 bit 0
+      c.io.pmod3.poke(0.B) // 4 bit 0
+
       c.clock.step(104)
-      c.io.rx.poke(0.B) // 5 bit 0
+      c.io.pmod3.poke(0.B) // 5 bit 0
+
       c.clock.step(104)
-      c.io.rx.poke(0.B) // 6 bit 0
+      c.io.pmod3.poke(0.B) // 6 bit 0
+
       c.clock.step(104)
-      c.io.rx.poke(0.B) // 7 bit 0
+      c.io.pmod3.poke(0.B) // 7 bit 0
+
       c.clock.step(104)
-      c.io.rx.poke(0.B) // 8 bit 0
+      c.io.pmod3.poke(0.B) // 8 bit 0
+
       c.clock.step(104)
-      c.io.rx.poke(true.B) // stop bit
+      c.io.pmod3.poke(true.B) // stop bit
+
       c.clock.step(104)
-      c.io.PIO0.expect(0x05.asUInt())
+      c.clock.step(104)
+      c.io.pmod4.expect(false.B)
+      c.io.PIO0.expect(0x5b.asUInt())
     }
   }
 }

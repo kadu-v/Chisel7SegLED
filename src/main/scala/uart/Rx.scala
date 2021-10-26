@@ -25,7 +25,7 @@ class Rx(freq: Int, baudRate: Int) extends Module {
   val clkCnt = RegInit(0.U(15.W))
   val dataCnt = RegInit(0.U(4.W))
   val busy = RegInit(false.B)
-  val rts = RegInit(true.B) // H: inactive, L: active
+  val rts = RegInit(false.B) // H: inactive, L: active
   val dout = RegInit(0.U(8.W))
 
   // detect positive edge of start bit rx
@@ -40,8 +40,8 @@ class Rx(freq: Int, baudRate: Int) extends Module {
     is(sIDLE) {
       when(detedge0.io.negdet) {
         state := sWAIT
-        io.busy := true.B
-        io.rts := false.B
+        busy := true.B
+        rts := true.B
       }
     }
     is(sWAIT) {
@@ -69,7 +69,7 @@ class Rx(freq: Int, baudRate: Int) extends Module {
       dataCnt := 0.asUInt()
       dout := rxData(7, 0)
       busy := false.B
-      rts := true.B
+      rts := false.B
     }
   }
 }
