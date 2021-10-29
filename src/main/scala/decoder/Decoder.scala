@@ -12,7 +12,7 @@ class Decoder() extends Module {
 
   val dout = RegInit(0x77.asUInt())
   dout := MuxCase(
-    0x30.asUInt(),
+    0x77.asUInt(),
     Seq(
       (io.din === 0x61.asUInt()) -> 0x7e.U(8.W),
       (io.din === 0x62.asUInt()) -> 0x30.U(8.W),
