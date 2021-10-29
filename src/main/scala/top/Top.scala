@@ -12,8 +12,16 @@ class Top() extends Module {
     val pmod3 = Input(Bool()) // TX data from RN4871
     val pmod4 = Output(Bool()) // clear to send
     val pmod8 = Output(Bool()) // reset of BLE
-
+    //
     val PIO0 = Output(UInt(8.W))
+    //
+    val PIO1 = Output(UInt(8.W))
+    // LED
+    val GLED = Output(Bool())
+    val RLED1 = Output(Bool())
+    val RLED2 = Output(Bool())
+    val RLED3 = Output(Bool())
+    val RLED4 = Output(Bool())
   })
 
   val genrst = Module(new GenRst())
@@ -25,6 +33,12 @@ class Top() extends Module {
   io.pmod8 := true.B
   dec.io.din := urx.io.dout
   io.PIO0 := dec.io.dout
+  io.PIO1 := dec.io.dout
+  io.GLED := urx.io.busy
+  io.RLED1 := true.B
+  io.RLED2 := true.B
+  io.RLED3 := true.B
+  io.RLED4 := true.B
 }
 
 object Elaborate extends App {
