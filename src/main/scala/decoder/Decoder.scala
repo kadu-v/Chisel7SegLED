@@ -23,7 +23,7 @@ class Decoder() extends Module {
       (io.din === 0x67.asUInt()) -> 0x5f.U(8.W),
       (io.din === 0x68.asUInt()) -> 0x70.U(8.W),
       (io.din === 0x69.asUInt()) -> 0x7f.U(8.W),
-      (io.din === 0x70.asUInt()) -> 0x7b.U(8.W)
+      (io.din === 0x7a.asUInt()) -> 0x7b.U(8.W)
     )
   )
   io.dout := dout
